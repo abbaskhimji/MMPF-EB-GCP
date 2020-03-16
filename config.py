@@ -1,6 +1,6 @@
 [Config]
 secret_key = 1
-numberofquestions = 4
+numberofquestions = 3
 firstaddlow = -200
 firstaddhigh = 200
 secondaddlow = -200
