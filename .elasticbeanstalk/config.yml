@@ -2,6 +2,8 @@ branch-defaults:
   default:
     environment: mmpf
     group_suffix: null
+  master:
+    environment: mmpf
 global:
   application_name: mmpf
   branch: null
