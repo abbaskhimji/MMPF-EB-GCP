@@ -236,4 +236,4 @@ def addtoleaderboard(howlong):
 
 if __name__ == '__main__':
     # application.debug
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    application.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
