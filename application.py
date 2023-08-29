@@ -236,4 +236,4 @@ def addtoleaderboard(howlong):
 
 if __name__ == '__main__':
     # application.debug
-    application.run(debug=True)
+    application.run()
