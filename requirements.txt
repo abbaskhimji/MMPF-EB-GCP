@@ -6,4 +6,4 @@ Jinja2
 MarkupSafe
 Werkzeug
 WTForms
-google
+google.cloud
