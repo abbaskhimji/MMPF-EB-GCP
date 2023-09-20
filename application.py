@@ -14,7 +14,7 @@ from google.cloud import storage
 client = storage.Client()
 bucket = client.get_bucket('mmpf-leaderboard-bucket')
 blob = bucket.blob('leaderboard.json')
-# blob.download_to_filename('leaderboard.json')
+#remove above three lines to work locally
 
 application = Flask(__name__)
 SECRET_KEY = os.urandom(32)
@@ -167,8 +167,8 @@ def admin():
 
 @application.route('/leaderboard', methods=['POST', 'GET'])
 def leaderboard():
+    # with open('leaderboard.json', 'r') as f:
     with blob.open(mode='r') as f:
-        # with open('leaderboard.json', 'r') as f:
         parsedjson = json.load(f)
         parsedjson = sorted(parsedjson, key=lambda i: i['Time'])
         topten = []
@@ -232,10 +232,12 @@ def addtoleaderboard(howlong):
     # pygame.image.save(img, "static/" + user + date + ".jpg")
     # cam.stop()
     player = {"Name": user, "Date": date, "Time": float(howlong)}
-    with open('leaderboard.json', 'r') as f:
+    # with open('leaderboard.json', 'r') as f:   #<<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
+    with blob.open(mode='r') as f:
         parsedjson = json.load(f)
         parsedjson.append(player)
-    with open('leaderboard.json', 'w') as f:
+    # with open('leaderboard.json', 'w') as f:  #<<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
+    with blob.open(mode='w') as f:
         json.dump(parsedjson, f)
     return
 
