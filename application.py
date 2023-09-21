@@ -167,7 +167,10 @@ def admin():
 
 @application.route('/leaderboard', methods=['POST', 'GET'])
 def leaderboard():
-    # with open('leaderboard.json', 'r') as f:
+    # with open('leaderboard.json', 'r') as f:   #<<<when running locally remove 4 lines below and replace with this>>>>
+    client = storage.Client()
+    bucket = client.get_bucket('mmpf-leaderboard-bucket')
+    blob = bucket.blob('leaderboard.json')
     with blob.open(mode='r') as f:
         parsedjson = json.load(f)
         parsedjson = sorted(parsedjson, key=lambda i: i['Time'])
