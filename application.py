@@ -14,7 +14,7 @@ from google.cloud import storage
 client = storage.Client()
 bucket = client.get_bucket('mmpf-leaderboard-bucket')
 blob = bucket.blob('leaderboard.json')
-#remove above three lines to work locally
+# remove above three lines to work locally
 
 application = Flask(__name__)
 SECRET_KEY = os.urandom(32)
@@ -128,7 +128,7 @@ def admin():
                                FirstAddLow=configParser.get('Config', 'FirstAddLow'),
                                FirstAddHigh=configParser.get('Config', 'FirstAddHigh'),
                                SecondAddLow=configParser.get('Config', 'SecondAddLow'),
-                               SecondAddHigh=configParser.get('Config','SecondAddHigh'),
+                               SecondAddHigh=configParser.get('Config', 'SecondAddHigh'),
                                FirstSubtractLow=configParser.get('Config', 'FirstSubtractLow'),
                                FirstSubtractHigh=configParser.get('Config', 'FirstSubtractHigh'),
                                SecondSubtractLow=configParser.get('Config', 'SecondSubtractLow'),
@@ -167,24 +167,24 @@ def admin():
 
 @application.route('/leaderboard', methods=['POST', 'GET'])
 def leaderboard():
-    # with open('leaderboard.json', 'r') as f:   #<<<when running locally remove 4 lines below and replace with this>>>>
+    # with open('leaderboard.json', 'r') as f:  # <<<when running locally remove 4 lines below and replace with this>>>>
     client = storage.Client()
     bucket = client.get_bucket('mmpf-leaderboard-bucket')
     blob = bucket.blob('leaderboard.json')
     with blob.open(mode='r') as f:
         parsedjson = json.load(f)
-        parsedjson = sorted(parsedjson, key=lambda i: i['Time'])
-        topten = []
-        pics = []
-        for x in range(0, 5):
-            topten.append(parsedjson[x])
-            pics.append(topten[x]['Name'] + topten[x]['Date'] + ".jpg")
-        filename0=pics[0]
-        filename1=pics[1]
-        filename2=pics[2]
-        filename3=pics[3]
-        filename4=pics[4]
-        return render_template('leaderboard.html', hm=topten, filename0=filename0, filename1=filename1, filename2=filename2, filename3=filename3, filename4=filename4)
+    parsedjson = sorted(parsedjson, key=lambda i: i['Time'])
+    topten = []
+    pics = []
+    for x in range(0, 5):
+        topten.append(parsedjson[x])
+        pics.append(topten[x]['Name'] + topten[x]['Date'] + ".jpg")
+    return render_template('leaderboard.html', hm=topten,
+                           filename0="1st-place-medal.png",
+                           filename1="2nd-place-medal.svg",
+                           filename2="3rd-place-medal.svg",
+                           filename3="keep-calm-and-keep-trying.png",
+                           filename4="keep-calm-and-keep-trying.png")
 
 
 class LoginForm(FlaskForm):
@@ -235,11 +235,11 @@ def addtoleaderboard(howlong):
     # pygame.image.save(img, "static/" + user + date + ".jpg")
     # cam.stop()
     player = {"Name": user, "Date": date, "Time": float(howlong)}
-    # with open('leaderboard.json', 'r') as f:   #<<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
+    # with open('leaderboard.json', 'r') as f:   # <<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
     with blob.open(mode='r') as f:
         parsedjson = json.load(f)
         parsedjson.append(player)
-    # with open('leaderboard.json', 'w') as f:  #<<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
+    # with open('leaderboard.json', 'w') as f:  # <<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
     with blob.open(mode='w') as f:
         json.dump(parsedjson, f)
     return
