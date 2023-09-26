@@ -11,11 +11,6 @@ from wtforms.validators import DataRequired
 from flask import Flask, redirect, url_for, request, render_template
 from google.cloud import storage
 
-client = storage.Client()
-bucket = client.get_bucket('mmpf-leaderboard-bucket')
-blob = bucket.blob('leaderboard.json')
-# remove above three lines to work locally
-
 application = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 application.config['SECRET_KEY'] = SECRET_KEY
@@ -236,6 +231,9 @@ def addtoleaderboard(howlong):
     # pygame.image.save(img, "static/" + user + date + ".jpg")
     # cam.stop()
     player = {"Name": user, "Date": date, "Time": float(howlong)}
+    client = storage.Client()
+    bucket = client.get_bucket('mmpf-leaderboard-bucket')
+    blob = bucket.blob('leaderboard.json')
     # with open('leaderboard.json', 'r') as f:   # <<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
     with blob.open(mode='r') as f:
         parsedjson = json.load(f)
