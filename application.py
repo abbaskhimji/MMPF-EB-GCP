@@ -173,6 +173,7 @@ def leaderboard():
     blob = bucket.blob('leaderboard.json')
     with blob.open(mode='r') as f:
         parsedjson = json.load(f)
+        f.close()
     parsedjson = sorted(parsedjson, key=lambda i: i['Time'])
     topten = []
     pics = []
@@ -242,6 +243,7 @@ def addtoleaderboard(howlong):
     # with open('leaderboard.json', 'w') as f:  # <<<<<REPLACE BELOW LINE WITH THIS LINE TO WORK LOCALLY>>>>>>
     with blob.open(mode='w') as f:
         json.dump(parsedjson, f)
+        f.close()
     return
 
 
