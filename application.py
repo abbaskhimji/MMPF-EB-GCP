@@ -157,7 +157,7 @@ def admin():
         configParser.set('Config', 'SecondDivideHigh', request.form['SecondDivideHigh'])
         with open('config.py', 'w') as configfile:
             configParser.write(configfile)
-        return redirect(url_for('login'))
+        return redirect(url_for('/'))
 
 
 @application.route('/leaderboard', methods=['POST', 'GET'])
