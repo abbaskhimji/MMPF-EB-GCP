@@ -25,7 +25,7 @@ configFilePath = r'config.py'
 configParser.read(configFilePath)
 
 
-@application.route('/', methods=['POST', 'GET'])
+@application.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         global questionandanswertuple
